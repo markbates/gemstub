@@ -1,0 +1,169 @@
+require 'fileutils'
+require 'optparse'
+require 'optparse/time'
+require 'ostruct'
+require 'pp'
+require "active_support"
+
+app = ARGV[0]
+raise "You must specify a name for this gem!" if app.nil?
+
+options = OpenStruct.new
+options.version = "0.0.1"
+options.binary = false
+options.author = (ENV["USERNAME"] || ENV["USER"])
+options.force = false
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+
+  opts.on("-b") do
+    options.binary = true
+  end
+  
+  opts.on("-v [VERSION]") do |v|
+    options.version = v
+  end
+  
+  opts.on("-a [AUTHOR]") do |v|
+    options.author = v
+  end
+  
+  opts.on("-f") do |v|
+    options.force = true
+  end
+  
+end
+
+opts.parse!(ARGV)
+
+puts "options = #{options.inspect}"
+
+app = app.downcase.gsub(" ", "_")
+
+if options.force
+  begin
+    FileUtils.rm_rf app
+  rescue Exception => e
+    puts e
+  end
+end
+
+puts "create directory: #{app}"
+Dir.mkdir app
+
+puts "create directory: #{app}/bin"
+Dir.mkdir "#{app}/bin"
+
+puts "create directory: #{app}/docs"
+Dir.mkdir "#{app}/docs"
+
+puts "create directory: #{app}/lib"
+Dir.mkdir "#{app}/lib"
+
+puts "create directory: #{app}/test"
+Dir.mkdir "#{app}/test"
+
+puts "creating Rakefile"
+File.open("#{app}/Rakefile", "w") do |file|
+  file << %{
+require 'rake'
+require 'rake/gempackagetask'
+require 'rake/clean'
+require 'rake/testtask'
+require 'find'
+
+gem_spec = Gem::Specification.new do |s|
+  s.name = '#{app}'
+  s.version = '#{options.version}'
+  s.summary = %{#{app}}
+  s.description = %{#{app} was developed by: #{options.author}}
+  s.author = "#{options.author}"
+  #s.email = ""
+  #s.homepage = ""
+
+  s.test_files = FileList['test/**/*']
+
+  s.files = FileList['lib/**/*.rb', 'README', 'doc/**/*.*' #{options.binary ? ", 'bin/**/*.*'" : ""}]
+  s.require_paths << 'lib'
+  
+
+  s.autorequire = '#{app}'
+
+  #{options.binary ? "" : "#"}s.bindir = "bin"
+  #{options.binary ? "" : "#"}s.executables << "#{app}"
+  #s.default_executable = ""
+  #s.add_dependency("", "")
+  #s.add_dependency("", "")
+  #s.extensions << ""
+  #s.extra_rdoc_files = ["README"]
+  #s.has_rdoc = true
+  #s.platform = "Gem::Platform::Ruby"
+  #s.required_ruby_version = ">= 1.8.5"
+  #s.requirements << "An ice cold beer."
+  #s.requirements << "Some free time!"
+  #s.rubyforge_project = "#{app}"
+end
+
+Rake::GemPackageTask.new(gem_spec) do |pkg|
+  pkg.need_zip = false
+  pkg.need_tar = false
+  rm_f FileList['pkg/**/*.*']
+end
+
+desc "Run test code"
+Rake::TestTask.new(:default) do |t|
+  t.libs << "test"
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+  }.strip
+end
+
+puts "creating README"
+File.open("#{app}/README", "w") do |file|
+  file << %{
+README
+========================================================================
+#{app}
+  }.strip
+end
+
+ldir = options.binary ? "bin" : "lib"
+fext = options.binary ? "" : ".rb"
+puts "creating #{app}/#{ldir}/#{app}#{fext}"
+File.open("#{app}/#{ldir}/#{app}#{fext}", "w") do |file|
+  file << ""
+end
+
+puts "creating #{app}/test/#{app}_test.rb"
+File.open("#{app}/test/#{app}_test.rb", "w") do |file|
+  file << %{
+require File.dirname(__FILE__) + '/test_helper.rb'
+
+class #{app.classify}Test < Test::Unit::TestCase
+
+  def setup
+  end
+  
+  def teardown
+  end
+  
+  # replace this with tests of your own.
+  def test_truth
+    assert true
+  end
+end
+  }.strip
+end
+
+puts "creating #{app}/test/test_helper.rb"
+File.open("#{app}/test/test_helper.rb", "w") do |file|
+  file << %{
+require "test/unit"
+
+# place common methods, assertions, and other type things in this file so
+# other tests will have access to them.
+
+  }.strip
+end
