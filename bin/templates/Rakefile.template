@@ -2,10 +2,15 @@ require 'rake'
 require 'rake/gempackagetask'
 require 'rake/clean'
 require 'rake/testtask'
+require 'rake/rdoctask'
 require 'find'
+require 'rubyforge'
+require 'rubygems'
+require 'rubygems/gem_runner'
 
 GEM_VERSION = "<%= options.version %>"
 GEM_NAME = "<%= app %>"
+GEM_RUBYFORGE_PROJECT = "<%= app %>"
 
 gem_spec = Gem::Specification.new do |s|
   s.name = GEM_NAME
@@ -57,4 +62,38 @@ end
 desc "Install the gem"
 task :install => :package do |t|
   puts `sudo gem install pkg/#{GEM_NAME}-#{GEM_VERSION}.gem`
+end
+
+desc "Release the gem"
+task :release => :install do |t|
+  begin
+    rf = RubyForge.new
+    rf.login
+    begin
+      rf.add_release(GEM_RUBYFORGE_PROJECT, GEM_NAME, GEM_VERSION, File.join("pkg", "#{GEM_NAME}-#{GEM_VERSION}.gem"))
+    rescue Exception => e
+      if e.message.match("Invalid package_id") || e.message.match("no <package_id> configured for")
+        puts "You need to create the package!"
+        rf.create_package(GEM_RUBYFORGE_PROJECT, GEM_NAME)
+        rf.add_release(GEM_RUBYFORGE_PROJECT, GEM_NAME, GEM_VERSION, File.join("pkg", "#{GEM_NAME}-#{GEM_VERSION}.gem"))
+      else
+        raise e
+      end
+    end
+  rescue Exception => e
+    puts e
+  end
+end
+
+
+Rake::RDocTask.new do |rd|
+  rd.main = "README"
+  files = Dir.glob("**/*.rb")
+  files = files.collect {|f| f unless f.match("test/") || f.match("doc/") }.compact
+  files << "README"
+  rd.rdoc_files = files
+  rd.rdoc_dir = "doc"
+  rd.options << "--line-numbers"
+  rd.options << "--inline-source"
+  rd.title = "<%= app %>"
 end

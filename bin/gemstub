@@ -12,26 +12,21 @@ raise "You must specify a name for this gem!" if app.nil?
 
 options = OpenStruct.new
 options.version = "0.0.1"
-options.binary = false
 options.author = (ENV["USERNAME"] || ENV["USER"])
 options.force = false
 
 opts = OptionParser.new do |opts|
-  opts.banner = "Usage: example.rb [options]"
-
-  opts.on("-b") do
-    options.binary = true
-  end
+  opts.banner = "Usage: gemstub [options]"
   
-  opts.on("-v [VERSION]") do |v|
+  opts.on("-v [initial version]") do |v|
     options.version = v
   end
   
-  opts.on("-a [AUTHOR]") do |v|
+  opts.on("-a [author name]") do |v|
     options.author = v
   end
   
-  opts.on("-f") do |v|
+  opts.on("-f [force]") do |v|
     options.force = true
   end
   
@@ -39,7 +34,7 @@ end
 
 opts.parse!(ARGV)
 
-puts "options = #{options.inspect}"
+# puts "options = #{options.inspect}"
 
 app = app.downcase.gsub(" ", "_")
 
@@ -57,8 +52,8 @@ Dir.mkdir app
 puts "create directory: #{app}/bin"
 Dir.mkdir "#{app}/bin"
 
-puts "create directory: #{app}/docs"
-Dir.mkdir "#{app}/docs"
+puts "create directory: #{app}/doc"
+Dir.mkdir "#{app}/doc"
 
 puts "create directory: #{app}/lib"
 Dir.mkdir "#{app}/lib"
