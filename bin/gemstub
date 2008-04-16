@@ -4,7 +4,7 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 require 'pp'
-require "active_support"
+require "mack_ruby_core_extensions"
 require 'erb'
 
 app = ARGV[0]
@@ -63,8 +63,6 @@ Dir.mkdir "#{app}/test"
 
 # Copy over templates:
 erb_files = Dir.glob(File.join(File.dirname(__FILE__), "templates", "**/*.template"))
-
-puts "erb_files: #{erb_files}"
 
 erb_files.each do |fl|
   res = ERB.new(File.open(fl).read).result(binding)

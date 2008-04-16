@@ -32,6 +32,7 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   s.require_paths << 'lib'
   s.bindir = "bin"
   s.executables << "gemstub"
+  s.add_dependency("mack_ruby_core_extensions")
 end
 
 Rake::GemPackageTask.new(gem_spec) do |pkg|
