@@ -8,7 +8,7 @@ require 'rubygems/gem_runner'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-GEM_VERSION = '1.0.8'
+GEM_VERSION = '1.0.9'
 GEM_NAME = "gemstub"
 GEM_RUBYFORGE_PROJECT = "magrathea"
 
