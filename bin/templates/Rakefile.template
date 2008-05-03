@@ -8,15 +8,11 @@ require 'rubyforge'
 require 'rubygems'
 require 'rubygems/gem_runner'
 
-GEM_VERSION = "<%= options.version %>"
-GEM_NAME = "<%= app %>"
-GEM_RUBYFORGE_PROJECT = "<%= app %>"
-
-gem_spec = Gem::Specification.new do |s|
-  s.name = GEM_NAME
-  s.version = GEM_VERSION
-  s.summary = "#{GEM_NAME}"
-  s.description = "#{GEM_NAME} was developed by: <%= options.author %>"
+spec = Gem::Specification.new do |s|
+  s.name = "<%= app %>"
+  s.version = "<%= options.version %>"
+  s.summary = "<%= app %>"
+  s.description = "<%= app %> was developed by: <%= options.author %>"
   s.author = "<%= options.author %>"
   #s.email = ""
   #s.homepage = ""
@@ -27,7 +23,7 @@ gem_spec = Gem::Specification.new do |s|
   s.require_paths << 'lib'
   
   # This has been removed in RubyGems in 1.0, so I would STRONGLY recommend not using it!
-  s.autorequire = "<%= app %>"
+  # s.autorequire = "<%= app %>"
 
   #s.bindir = "bin"
   #s.executables << "<%= app %>"
@@ -38,14 +34,14 @@ gem_spec = Gem::Specification.new do |s|
   #s.extra_rdoc_files = ["README"]
   #s.has_rdoc = true
   #s.platform = "Gem::Platform::Ruby"
-  #s.required_ruby_version = ">= 1.8.5"
+  #s.required_ruby_version = ">= 1.8.6"
   #s.requirements << "An ice cold beer."
   #s.requirements << "Some free time!"
-  #s.rubyforge_project = "<%= app %>"
+  s.rubyforge_project = "<%= app %>"
 end
 
 # rake package
-Rake::GemPackageTask.new(gem_spec) do |pkg|
+Rake::GemPackageTask.new(spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
   rm_f FileList['pkg/**/*.*']
@@ -61,7 +57,7 @@ end
 
 desc "Install the gem"
 task :install => :package do |t|
-  puts `sudo gem install pkg/#{GEM_NAME}-#{GEM_VERSION}.gem`
+  puts `sudo gem install pkg/#{spec.name}-#{spec.version}.gem`
 end
 
 desc "Release the gem"
@@ -70,12 +66,12 @@ task :release => :install do |t|
     rf = RubyForge.new
     rf.login
     begin
-      rf.add_release(GEM_RUBYFORGE_PROJECT, GEM_NAME, GEM_VERSION, File.join("pkg", "#{GEM_NAME}-#{GEM_VERSION}.gem"))
+      rf.add_release(spec.rubyforge_project, spec.name, spec.version, File.join("pkg", "#{spec.name}-#{spec.version}.gem"))
     rescue Exception => e
       if e.message.match("Invalid package_id") || e.message.match("no <package_id> configured for")
         puts "You need to create the package!"
-        rf.create_package(GEM_RUBYFORGE_PROJECT, GEM_NAME)
-        rf.add_release(GEM_RUBYFORGE_PROJECT, GEM_NAME, GEM_VERSION, File.join("pkg", "#{GEM_NAME}-#{GEM_VERSION}.gem"))
+        rf.create_package(spec.rubyforge_project, spec.name)
+        rf.add_release(spec.rubyforge_project, spec.name, spec.version, File.join("pkg", "#{spec.name}-#{spec.version}.gem"))
       else
         raise e
       end
