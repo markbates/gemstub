@@ -67,7 +67,8 @@ erb_files = Dir.glob(File.join(File.dirname(__FILE__), "templates", "**/*.templa
 erb_files.each do |fl|
   res = ERB.new(File.open(fl).read).result(binding)
   n = fl.gsub(File.join(File.dirname(__FILE__), "templates"), app).gsub(".template", "")
-  n.gsub!("app", app)
+  n.gsub!("%=app%", app)
+  FileUtils.mkdir_p(File.dirname(n))
   File.open(n, "w") {|f| f.puts res}
   puts "Created: #{n}"
 end
