@@ -8,7 +8,7 @@ require 'rubygems/gem_runner'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-GEM_VERSION = '1.0.12'
+GEM_VERSION = '1.0.13'
 GEM_NAME = "gemstub"
 GEM_RUBYFORGE_PROJECT = "magrathea"
 
@@ -28,11 +28,11 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   
   s.test_files = FileList['test/**/*']
   
-  s.files = FileList['lib/**/*.rb', 'README', 'doc/**/*.*', 'bin/**/*.*']
+  s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
   s.require_paths << 'lib'
   s.bindir = "bin"
   s.executables << "gemstub"
-  s.add_dependency("mack_ruby_core_extensions")
+  s.add_dependency("mack-facets")
 end
 
 Rake::GemPackageTask.new(gem_spec) do |pkg|
@@ -43,7 +43,7 @@ end
 
 desc "Install the gemstub"
 task :install => :package do |t|
-  puts `sudo gem install pkg/#{GEM_NAME}-#{GEM_VERSION}.gem`
+  system "sudo gem install pkg/#{GEM_NAME}-#{GEM_VERSION}.gem --no-update-sources --local"
 end
 
 desc "Release gemstub"

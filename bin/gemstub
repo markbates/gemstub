@@ -1,10 +1,12 @@
 #!/usr/local/bin/ruby
+require 'rubygems'
 require 'fileutils'
 require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 require 'pp'
-require "mack_ruby_core_extensions"
+require "mack-facets"
+require 'genosaurus'
 require 'erb'
 
 app = ARGV[0]
@@ -46,29 +48,33 @@ if options.force
   end
 end
 
-puts "create directory: #{app}"
-Dir.mkdir app
+require File.join(File.dirname(__FILE__), "..", "lib", "gem_generator")
 
-puts "create directory: #{app}/bin"
-Dir.mkdir "#{app}/bin"
+GemGenerator.run("app" => app, "version" => options.version, "author" => options.author)
 
-puts "create directory: #{app}/doc"
-Dir.mkdir "#{app}/doc"
-
-puts "create directory: #{app}/lib"
-Dir.mkdir "#{app}/lib"
-
-puts "create directory: #{app}/test"
-Dir.mkdir "#{app}/test"
-
-# Copy over templates:
-erb_files = Dir.glob(File.join(File.dirname(__FILE__), "templates", "**/*.template"))
-
-erb_files.each do |fl|
-  res = ERB.new(File.open(fl).read).result(binding)
-  n = fl.gsub(File.join(File.dirname(__FILE__), "templates"), app).gsub(".template", "")
-  n.gsub!("%=app%", app)
-  FileUtils.mkdir_p(File.dirname(n))
-  File.open(n, "w") {|f| f.puts res}
-  puts "Created: #{n}"
-end
+# puts "create directory: #{app}"
+# Dir.mkdir app
+# 
+# puts "create directory: #{app}/bin"
+# Dir.mkdir "#{app}/bin"
+# 
+# puts "create directory: #{app}/doc"
+# Dir.mkdir "#{app}/doc"
+# 
+# puts "create directory: #{app}/lib"
+# Dir.mkdir "#{app}/lib"
+# 
+# puts "create directory: #{app}/test"
+# Dir.mkdir "#{app}/test"
+# 
+# # Copy over templates:
+# erb_files = Dir.glob(File.join(File.dirname(__FILE__), "templates", "**/*.template"))
+# 
+# erb_files.each do |fl|
+#   res = ERB.new(File.open(fl).read).result(binding)
+#   n = fl.gsub(File.join(File.dirname(__FILE__), "templates"), app).gsub(".template", "")
+#   n.gsub!("%=app%", app)
+#   FileUtils.mkdir_p(File.dirname(n))
+#   File.open(n, "w") {|f| f.puts res}
+#   puts "Created: #{n}"
+# end

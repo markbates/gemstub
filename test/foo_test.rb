@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
-class <%= app.camelcase %>Test < Test::Unit::TestCase
+class FooTest < Test::Unit::TestCase
 
   def setup
   end
