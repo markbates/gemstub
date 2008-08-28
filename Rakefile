@@ -50,6 +50,7 @@ desc "Release gemstub"
 task :release => :install do |t|
   begin
     rf = RubyForge.new
+    rf.configure
     rf.login
     begin
       rf.add_release(GEM_RUBYFORGE_PROJECT, GEM_NAME, GEM_VERSION, File.join("pkg", "#{GEM_NAME}-#{GEM_VERSION}.gem"))
