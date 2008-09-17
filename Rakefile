@@ -8,17 +8,13 @@ require 'rubygems/gem_runner'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-GEM_VERSION = '1.0.14'
-GEM_NAME = "gemstub"
-GEM_RUBYFORGE_PROJECT = "magrathea"
-
-gem_spec = Gem::Specification.new do |s|
-  s.name = GEM_NAME
-  s.version = GEM_VERSION
+@gem_spec = Gem::Specification.new do |s|
+  s.name = 'gemstub'
+  s.version = '1.0.15'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
-  s.rubyforge_project = GEM_RUBYFORGE_PROJECT
+  s.rubyforge_project = 'magrathea'
   s.summary = %{Gemstub is a very simple tool for creating the stub code you need to build a gem.
 
 Usage: at a command prompt simply type: gemstub your_gem_name_here
@@ -35,35 +31,47 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   s.add_dependency("mack-facets")
 end
 
-Rake::GemPackageTask.new(gem_spec) do |pkg|
+Rake::GemPackageTask.new(@gem_spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
   rm_f FileList['pkg/**/*.*']
 end
 
-desc "Install the gemstub"
-task :install => :package do |t|
-  system "sudo gem install pkg/#{GEM_NAME}-#{GEM_VERSION}.gem --no-update-sources --local"
+desc "Install the gem"
+task :install => [:package] do |t|
+  sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
+  puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources`
 end
 
-desc "Release gemstub"
+desc "Release the gem"
 task :release => :install do |t|
   begin
-    rf = RubyForge.new
-    rf.configure
-    rf.login
+    ac_path = File.join(ENV["HOME"], ".rubyforge", "auto-config.yml")
+    if File.exists?(ac_path)
+      fixed = File.open(ac_path).read.gsub("  ~: {}\n\n", '')
+      fixed.gsub!(/    !ruby\/object:Gem::Version \? \n.+\n.+\n\n/, '')
+      puts "Fixing #{ac_path}..."
+      File.open(ac_path, "w") {|f| f.puts fixed}
+    end
     begin
-      rf.add_release(GEM_RUBYFORGE_PROJECT, GEM_NAME, GEM_VERSION, File.join("pkg", "#{GEM_NAME}-#{GEM_VERSION}.gem"))
+      rf = RubyForge.new
+      rf.configure
+      rf.login
+      rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, File.join("pkg", "#{@gem_spec.name}-#{@gem_spec.version}.gem"))
     rescue Exception => e
       if e.message.match("Invalid package_id") || e.message.match("no <package_id> configured for")
         puts "You need to create the package!"
-        rf.create_package(GEM_RUBYFORGE_PROJECT, GEM_NAME)
-        rf.add_release(GEM_RUBYFORGE_PROJECT, GEM_NAME, GEM_VERSION, File.join("pkg", "#{GEM_NAME}-#{GEM_VERSION}.gem"))
+        rf.create_package(@gem_spec.rubyforge_project, @gem_spec.name)
+        rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, File.join("pkg", "#{@gem_spec.name}-#{@gem_spec.version}.gem"))
       else
         raise e
       end
     end
   rescue Exception => e
-    puts e
+    if e.message == "You have already released this version."
+      puts e
+    else
+      raise e
+    end
   end
 end
