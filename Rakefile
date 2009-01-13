@@ -10,7 +10,7 @@ require 'rake/rdoctask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '1.0.18'
+  s.version = '1.0.19'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
@@ -30,6 +30,7 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   s.executables << "gemstub"
   s.add_dependency("mack-facets")
   s.add_dependency('genosaurus')
+  s.add_dependency('rubyforge')
 end
 
 Rake::GemPackageTask.new(@gem_spec) do |pkg|
