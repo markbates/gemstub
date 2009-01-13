@@ -10,34 +10,7 @@ require 'rubygems/gem_runner'
 require 'spec'
 require 'spec/rake/spectask'
 
-@gem_spec = Gem::Specification.new do |s|
-  s.name = "<%= app %>"
-  s.version = "<%= version %>"
-  s.summary = "<%= app %>"
-  s.description = "<%= app %> was developed by: <%= author %>"
-  s.author = "<%= author %>"
-  #s.email = ""
-  #s.homepage = ""
-
-  s.test_files = FileList['test/**/*']
-
-  s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
-  s.require_paths << 'lib'
-
-  #s.bindir = "bin"
-  #s.executables << "<%= app %>"
-  #s.default_executable = ""
-  #s.add_dependency("", "")
-  #s.add_dependency("", "")
-  #s.extensions << ""
-  #s.extra_rdoc_files = ["README"]
-  #s.has_rdoc = true
-  #s.platform = "Gem::Platform::Ruby"
-  #s.required_ruby_version = ">= 1.8.6"
-  #s.requirements << "An ice cold beer."
-  #s.requirements << "Some free time!"
-  s.rubyforge_project = "<%= app %>"
-end
+load File.join(File.dirname(__FILE__), '<%= app %>.gemspec')
 
 # rake package
 Rake::GemPackageTask.new(@gem_spec) do |pkg|
@@ -57,7 +30,7 @@ end
 desc "Install the gem"
 task :install => [:package] do |t|
   sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
-  puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources`
+  puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources --no-ri --no-rdoc`
 end
 
 desc "Release the gem"

@@ -8,7 +8,7 @@ require 'rubygems/gem_runner'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-require File.join(File.dirname(__FILE__), 'gemstub.gemspec')
+load File.join(File.dirname(__FILE__), 'gemstub.gemspec')
 
 Rake::GemPackageTask.new(@gem_spec) do |pkg|
   pkg.need_zip = false
