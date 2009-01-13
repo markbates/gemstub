@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'rake'
+require 'rake/gempackagetask'
+
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
   s.version = '1.0.16'
