@@ -10,13 +10,41 @@ require 'rubygems/gem_runner'
 require 'spec'
 require 'spec/rake/spectask'
 
-load File.join(File.dirname(__FILE__), '<%= app %>.gemspec')
+@gem_spec = Gem::Specification.new do |s|
+  s.name = "<%= app %>"
+  s.version = "<%= version %>"
+  s.summary = "<%= app %>"
+  s.description = "<%= app %> was developed by: <%= author %>"
+  s.author = "<%= author %>"
+  s.email = ""
+  s.homepage = ""
+
+  s.test_files = FileList['test/**/*']
+
+  s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
+  s.require_paths << 'lib'
+
+  #s.bindir = "bin"
+  #s.executables << "<%= app %>"
+  #s.default_executable = ""
+  #s.add_dependency("", "")
+  #s.add_dependency("", "")
+  #s.extensions << ""
+  s.extra_rdoc_files = ["README"]
+  s.has_rdoc = true
+  #s.platform = "Gem::Platform::Ruby"
+  #s.required_ruby_version = ">= 1.8.6"
+  #s.requirements << "An ice cold beer."
+  #s.requirements << "Some free time!"
+  s.rubyforge_project = "<%= app %>"
+end
 
 # rake package
 Rake::GemPackageTask.new(@gem_spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
   rm_f FileList['pkg/**/*.*']
+  File.open(File.join(File.dirname(__FILE__), '<%= app %>.gemspec'), 'w') {|f| f.puts @gem_spec.to_ruby}
 end
 
 # rake
