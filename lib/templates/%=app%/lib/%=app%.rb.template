@@ -1,3 +1,3 @@
 Dir.glob(File.join(File.dirname(__FILE__), '<%= app %>', '**/*.rb')).each do |f|
-  require f
+  require File.expand_path(f)
 end

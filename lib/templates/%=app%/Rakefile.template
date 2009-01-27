@@ -18,25 +18,22 @@ require 'spec/rake/spectask'
   s.author = "<%= author %>"
   s.email = ""
   s.homepage = ""
-
   s.test_files = FileList['test/**/*']
-
   s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
-  s.require_paths << 'lib'
-
+  s.require_paths = ['lib']
+  s.extra_rdoc_files = ["README"]
+  s.has_rdoc = true
+  s.rubyforge_project = "<%= app %>"
   #s.bindir = "bin"
   #s.executables << "<%= app %>"
-  #s.default_executable = ""
   #s.add_dependency("", "")
   #s.add_dependency("", "")
   #s.extensions << ""
-  s.extra_rdoc_files = ["README"]
-  s.has_rdoc = true
-  #s.platform = "Gem::Platform::Ruby"
   #s.required_ruby_version = ">= 1.8.6"
+  #s.default_executable = ""
+  #s.platform = "Gem::Platform::Ruby"
   #s.requirements << "An ice cold beer."
   #s.requirements << "Some free time!"
-  s.rubyforge_project = "<%= app %>"
 end
 
 # rake package
@@ -44,7 +41,6 @@ Rake::GemPackageTask.new(@gem_spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
   rm_f FileList['pkg/**/*.*']
-  File.open(File.join(File.dirname(__FILE__), '<%= app %>.gemspec'), 'w') {|f| f.puts @gem_spec.to_ruby}
 end
 
 # rake
@@ -55,8 +51,13 @@ Spec::Rake::SpecTask.new(:default) do |t|
   t.spec_files = Dir.glob('test/**/*_spec.rb')
 end
 
+desc 'regenerate the gemspec'
+task :gemspec do
+  File.open(File.join(File.dirname(__FILE__), '<%= app %>.gemspec'), 'w') {|f| f.puts @gem_spec.to_ruby}
+end
+
 desc "Install the gem"
-task :install => [:package] do |t|
+task :install => [:gemspec, :package] do |t|
   sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
   puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources --no-ri --no-rdoc`
 end

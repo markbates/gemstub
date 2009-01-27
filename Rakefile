@@ -10,7 +10,7 @@ require 'rake/rdoctask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '1.0.19'
+  s.version = '1.1.0'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
@@ -22,7 +22,7 @@ Usage: at a command prompt simply type: gemstub your_gem_name_here
 That's it, after that, you all you have to do is the actual coding of your gem! Enjoy!
 }
   
-  s.test_files = FileList['test/**/*']
+  # s.test_files = FileList['test/**/*']
   
   s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
   s.require_paths << 'lib'
@@ -37,13 +37,17 @@ Rake::GemPackageTask.new(@gem_spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
   rm_f FileList['pkg/**/*.*']
-  File.open(File.join(File.dirname(__FILE__), 'gemstub.gemspec'), 'w') {|f| f.puts @gem_spec.to_ruby}
 end
 
 desc "Install the gem"
-task :install => [:package] do |t|
+task :install => [:gemspec, :package] do |t|
   sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
   puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources`
+end
+
+desc 'regenerate the gemspec'
+task :gemspec do
+  File.open(File.join(File.dirname(__FILE__), 'gemstub.gemspec'), 'w') {|f| f.puts @gem_spec.to_ruby}
 end
 
 desc "Release the gem"
