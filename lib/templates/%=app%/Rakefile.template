@@ -18,12 +18,12 @@ require 'spec/rake/spectask'
   s.author = "<%= author %>"
   s.email = ""
   s.homepage = ""
-  s.test_files = FileList['test/**/*']
   s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
   s.require_paths = ['lib']
   s.extra_rdoc_files = ["README"]
   s.has_rdoc = true
   s.rubyforge_project = "<%= app %>"
+  # s.test_files = FileList['spec/**/*']
   #s.bindir = "bin"
   #s.executables << "<%= app %>"
   #s.add_dependency("", "")
