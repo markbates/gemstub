@@ -48,7 +48,7 @@ if options.force
   end
 end
 
-require File.join(File.dirname(__FILE__), "..", "lib", "gem_generator")
+require File.join(File.dirname(__FILE__), "..", "lib", 'gemstub', 'gem_generator', 'gem_generator')
 
 GemGenerator.run("app" => app, "version" => options.version, "author" => options.author)
 

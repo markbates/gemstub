@@ -1,0 +1,4 @@
+template_1:
+  type: file
+  template_path: <%= File.join(templates_directory_path, 'gems.yml.template') %>
+  output_path: <%= File.join(output_dir, 'gems.yml') %>

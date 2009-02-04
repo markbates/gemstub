@@ -1,12 +1,14 @@
 require 'rake'
 require 'rake/gempackagetask'
 require 'rake/clean'
+require 'rake/testtask'
+require 'rake/rdoctask'
 require 'find'
 require 'rubyforge'
 require 'rubygems'
 require 'rubygems/gem_runner'
-require 'rake/testtask'
-require 'rake/rdoctask'
+require 'spec'
+require 'spec/rake/spectask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
@@ -22,10 +24,8 @@ Usage: at a command prompt simply type: gemstub your_gem_name_here
 That's it, after that, you all you have to do is the actual coding of your gem! Enjoy!
 }
   
-  # s.test_files = FileList['test/**/*']
-  
   s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
-  s.require_paths << 'lib'
+  s.require_paths = ['lib']
   s.bindir = "bin"
   s.executables << "gemstub"
   s.add_dependency("mack-facets")
@@ -37,6 +37,14 @@ Rake::GemPackageTask.new(@gem_spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
   rm_f FileList['pkg/**/*.*']
+end
+
+# rake
+desc 'Run specifications'
+Spec::Rake::SpecTask.new(:default) do |t|
+  opts = File.join(File.dirname(__FILE__), "test", 'spec.opts')
+  t.spec_opts << '--options' << opts if File.exists?(opts)
+  t.spec_files = Dir.glob('spec/**/*_spec.rb')
 end
 
 desc "Install the gem"
