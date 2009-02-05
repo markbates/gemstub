@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Bates"]
-  s.date = %q{2009-02-04}
+  s.date = %q{2009-02-05}
   s.default_executable = %q{gemstub}
   s.email = %q{mark@markbates.com}
   s.executables = ["gemstub"]
-  s.files = ["lib/gemstub/gem_generator/gem_generator.rb", "lib/gemstub/gem_generator/templates/%=app%/lib/%=app%/%=app%.rb.template", "lib/gemstub/gem_generator/templates/%=app%/lib/%=app%.rb.template", "lib/gemstub/gem_generator/templates/%=app%/Rakefile.template", "lib/gemstub/gem_generator/templates/%=app%/README.template", "lib/gemstub/gem_generator/templates/%=app%/spec/lib/%=app%_spec.rb.template", "lib/gemstub/gem_generator/templates/%=app%/spec/spec.opts.template", "lib/gemstub/gem_generator/templates/%=app%/spec/spec_helper.rb.template", "lib/gemstub/tools.rb", "lib/gemstub/yaml_generator/manifest.yml", "lib/gemstub/yaml_generator/templates/gems.yml.template", "lib/gemstub/yaml_generator/yaml_generator.rb", "lib/gemstub.rb", "README", "bin/gemstub"]
+  s.files = ["lib/gemstub/commands/create.rb", "lib/gemstub/commands/install.rb", "lib/gemstub/commands/setup.rb", "lib/gemstub/gem_generator/gem_generator.rb", "lib/gemstub/gem_generator/templates/%=app%/lib/%=app%/%=app%.rb.template", "lib/gemstub/gem_generator/templates/%=app%/lib/%=app%.rb.template", "lib/gemstub/gem_generator/templates/%=app%/Rakefile.template", "lib/gemstub/gem_generator/templates/%=app%/README.template", "lib/gemstub/gem_generator/templates/%=app%/spec/lib/%=app%/%=app%_spec.rb.template", "lib/gemstub/gem_generator/templates/%=app%/spec/spec.opts.template", "lib/gemstub/gem_generator/templates/%=app%/spec/spec_helper.rb.template", "lib/gemstub/tools.rb", "lib/gemstub/yaml_generator/manifest.yml", "lib/gemstub/yaml_generator/templates/gems.yml.template", "lib/gemstub/yaml_generator/yaml_generator.rb", "lib/gemstub.rb", "README", "bin/gemstub"]
   s.homepage = %q{http://www.mackframework.com}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{gemstub}
