@@ -14,7 +14,7 @@ if ARGV[0].nil?
   puts 'Commands:'
   puts '  gemstub create <gem_name> [options]'
   puts '  gemstub install'
-  puts '  gemstub setup <path/to/gems.yml | default is: config/gems.yml>'
+  puts '  gemstub setup [output_dir (default is ./config)]'
   exit(0)
 end
 

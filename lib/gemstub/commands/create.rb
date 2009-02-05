@@ -7,7 +7,7 @@ options.author = (ENV["USERNAME"] || ENV["USER"])
 options.force = false
 
 opts = OptionParser.new do |opts|
-  opts.banner = "Usage: gemstub create [options]"
+  opts.banner = "Usage: gemstub create <gem_name> [options]"
   
   opts.on("-v [initial version]") do |v|
     options.version = v
