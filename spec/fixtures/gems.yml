@@ -21,3 +21,7 @@ gems:
   #     - will_paginate/collection
   #     - will_paginate/array
   #   load: true
+  #   groups:
+  #     - development
+  #     - testing
+  #     - all # the gem will automatically be added to this group if no groups are specified

@@ -13,7 +13,7 @@ if ARGV[0].nil?
   puts 'Usage: gemstub [command]'
   puts 'Commands:'
   puts '  gemstub create <gem_name> [options]'
-  puts '  gemstub install'
+  puts '  gemstub install [options]'
   puts '  gemstub setup [output_dir (default is ./config)]'
   exit(0)
 end

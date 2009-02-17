@@ -1,0 +1,93 @@
+# specify an alternate gems repository
+source: 'http://gems.example.com'
+# specify a different gem command
+# gem_command: 'jruby -S gem'
+gems:
+  - name: cucumber
+    version: ">=0.1.13"
+    load: false
+    groups:
+      - testing
+  - name: rspec-rails
+    version: 1.1.12
+    load: false
+    groups:
+      - testing
+  - name: thoughtbot-factory_girl
+    version: 1.1.2
+    load: false
+    groups:
+      - testing
+  - name: RedCloth
+    version: 3.0.4
+    require_name: redcloth
+    load: true
+    groups:
+      - development
+      - production
+  - name: RubyInline
+    version: 3.6.6
+    require_name: inline
+    load: true
+  - name: bjobber
+    version: 1.0.1
+    require_name: bj
+    load: true
+    groups:
+      - production
+  - name: chronic
+    version: 0.2.3
+    load: true
+  - name: gbarcode
+    version: 0.98.16
+    load: true
+    source: http://gems.github.com
+  - name: fastercsv
+    version: 1.2.3
+    load: true
+    groups:
+      - fubar
+  - name: memcache-client
+    version: 1.5.0
+    require_name: memcache
+    load: true
+    groups:
+      - development
+      - production
+  - name: mislav-will_paginate
+    version: 2.3.2
+    require_name: 
+      - will_paginate
+      - will_paginate/collection
+      - will_paginate/array
+    load: true
+  - name: pdf-writer
+    version: 1.1.7
+    require_name: pdf/writer
+    load: true
+    groups:
+      - fubar
+  - name: raspell
+    version: "1.1"
+    load: true
+  - name: rmagick
+    version: 2.9.0
+    require_name: RMagick
+    load: true
+  - name: ruby-aaws
+    version: 0.4.4
+    require_name: amazon
+    load: true
+  - name: slim-attributes
+    version: 0.5.0
+    require_name: slim_attributes
+    load: true
+  - name: topfunky-ruby-hmac
+    version: 0.3.2
+    require_name: hmac-sha1
+    load: true
+  - name: soap4r
+    version: 1.5.8
+    load: false
+    groups:
+      - production

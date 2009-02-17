@@ -9,11 +9,9 @@ require File.join(File.dirname(__FILE__), '..', 'lib', 'gemstub')
 Spec::Runner.configure do |config|
   
   config.before(:all) do
-    
   end
   
   config.after(:all) do
-    
   end
   
   config.before(:each) do
@@ -25,7 +23,9 @@ Spec::Runner.configure do |config|
   end
   
   def cleanup
+    FileUtils.stub!(:pwd).and_return(File.dirname(__FILE__))
     FileUtils.rm_rf($genosaurus_output_directory)
+    Gemstub::Tools::GemManager.instance.reset!
   end
   
 end
