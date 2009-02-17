@@ -23,7 +23,7 @@ Spec::Runner.configure do |config|
   end
   
   def cleanup
-    FileUtils.stub!(:pwd).and_return(File.dirname(__FILE__))
+    FileUtils.stub!(:pwd).and_return(File.join(File.dirname(__FILE__), 'fake_application'))
     FileUtils.rm_rf($genosaurus_output_directory)
     Gemstub::Tools::GemManager.instance.reset!
   end
