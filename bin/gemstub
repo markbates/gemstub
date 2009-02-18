@@ -30,6 +30,10 @@ opts = OptionParser.new do |opts|
   opts.on("-f [force]") do |v|
     options.force = true
   end
+
+  opts.on("-t [rspec/unit]") do |v|
+    options.test = v
+  end
   
 end
 
@@ -47,6 +51,12 @@ if options.force
   end
 end
 
-require File.join(File.dirname(__FILE__), "..", "lib", 'gemstub', 'gem_generator', 'gem_generator')
+if options.test == "unit"
+  require File.join(File.dirname(__FILE__), "..", "lib", 'gemstub', 'gem_unit_generator', 'gem_unit_generator')
 
-GemGenerator.run("app" => app, "version" => options.version, "author" => options.author)
+  GemUnitGenerator.run("app" => app, "version" => options.version, "author" => options.author)
+else
+  require File.join(File.dirname(__FILE__), "..", "lib", 'gemstub', 'gem_generator', 'gem_generator')
+
+  GemGenerator.run("app" => app, "version" => options.version, "author" => options.author)
+end

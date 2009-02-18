@@ -8,7 +8,7 @@ describe GemGenerator do
   end
   
   it 'should generate the stub of a gem' do
-    GemGenerator.run('app' => 'my_cool_new_gem')
+    GemGenerator.run('app' => 'my_cool_new_gem', 'author' => 'markbates')
     out_base_path = File.join($genosaurus_output_directory, 'my_cool_new_gem')
     %w{Rakefile 
        README 
