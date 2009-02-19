@@ -13,5 +13,17 @@ class GemGenerator < Genosaurus
   def author
     param(:author) || (ENV["USERNAME"] || ENV["USER"])
   end
-  
+
+  def test
+    param(:test) || 'rspec'
+  end
+
+  def rspec?
+    test == 'rspec'
+  end
+
+  def unit?
+    test == 'unit'
+  end
+
 end
