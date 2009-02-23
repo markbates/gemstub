@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'test/unit'
 begin
   require 'shoulda'
   require 'mocha'
