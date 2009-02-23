@@ -1,7 +1,7 @@
 require 'rubygems'
 begin
-require 'shoulda'
-require 'mocha'
+  require 'shoulda'
+  require 'mocha'
 rescue LoadError
 end
 
