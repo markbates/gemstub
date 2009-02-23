@@ -1,0 +1,62 @@
+app_directory:
+  type: directory
+  output_path: <%= File.join(app, "lib", app) %>
+
+app_rake_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "Rakefile.template") %>
+  output_path: <%= File.join(app, "Rakefile") %>
+
+app_readme_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "README.template") %>
+  output_path: <%= File.join(app, "README") %>
+
+app_lib_init_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "app_init.rb.template") %>
+  output_path: <%= File.join(app, "lib", "#{app}.rb") %>
+
+app_lib_app_gem_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "app_gem.rb.template") %>
+  output_path: <%= File.join(app, "lib", app, "#{app}.rb") %>
+
+<% if rspec? %>
+
+spec_directory:
+  type: directory
+  output_path: <%= File.join(app, "spec", "lib", app) %>
+
+spec_helper_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "spec", "spec_helper.rb.template") %>
+  output_path: <%= File.join(app, "spec", "spec_helper.rb") %>
+
+spec_opts_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "spec", "spec.opts.template") %>
+  output_path: <%= File.join(app, "spec", "spec.opts") %>
+
+spec_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "spec", "app_spec.rb.template") %>
+  output_path: <%= File.join(app, "spec", "lib", app, "#{app}_spec.rb") %>
+
+<% elsif unit? %>
+
+unit_directory:
+  type: directory
+  output_path: <%= File.join(app, "test", "unit") %>
+
+unit_helper:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test", "test_helper.rb.template") %>
+  output_path: <%= File.join(app, "test", "test_helper.rb") %>
+
+unit_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test", "test_app.rb.template") %>
+  output_path: <%= File.join(app, "test", "unit", "test_#{app}.rb") %>
+
+<% end %>

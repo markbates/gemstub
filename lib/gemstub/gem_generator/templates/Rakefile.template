@@ -7,8 +7,16 @@ require 'find'
 require 'rubyforge'
 require 'rubygems'
 require 'rubygems/gem_runner'
+<%- if rspec? -%>
 require 'spec'
 require 'spec/rake/spectask'
+<%- elsif unit? -%>
+begin
+  require 'shoulda'
+  require 'shoulda/tasks'
+rescue LoadError
+end
+<%- end -%>
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = "<%= app %>"
@@ -43,6 +51,7 @@ Rake::GemPackageTask.new(@gem_spec) do |pkg|
   rm_f FileList['pkg/**/*.*']
 end
 
+<%- if rspec? -%>
 # rake
 desc 'Run specifications'
 Spec::Rake::SpecTask.new(:default) do |t|
@@ -50,6 +59,15 @@ Spec::Rake::SpecTask.new(:default) do |t|
   t.spec_opts << '--options' << opts if File.exists?(opts)
   t.spec_files = Dir.glob('spec/**/*_spec.rb')
 end
+<%- elsif unit? -%>
+task :default => :test
+Rake::TestTask.new { |t| 
+  t.libs << "test"
+  t.pattern = 'test/unit/**/test_*.rb'
+  t.verbose = true
+  t.warning = true
+}
+<%- end -%>
 
 desc 'regenerate the gemspec'
 task :gemspec do

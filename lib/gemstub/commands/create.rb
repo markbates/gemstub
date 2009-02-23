@@ -7,7 +7,7 @@ options.author = (ENV["USERNAME"] || ENV["USER"])
 options.force = false
 
 opts = OptionParser.new do |opts|
-  opts.banner = "Usage: gemstub create <gem_name> [options]"
+  opts.banner = "Usage: gemstub [options]"
   
   opts.on("-v [initial version]") do |v|
     options.version = v
@@ -19,6 +19,10 @@ opts = OptionParser.new do |opts|
   
   opts.on("-f [force]") do |v|
     options.force = true
+  end
+
+  opts.on("-t [rspec/unit]") do |v|
+    options.test = v
   end
   
 end
@@ -38,5 +42,7 @@ if options.force
 end
 
 require File.join(File.dirname(__FILE__), "..", 'gem_generator', 'gem_generator')
-
-GemGenerator.run("app" => app, "version" => options.version, "author" => options.author)
+GemGenerator.run("app"      => app,
+                 "version"  => options.version,
+                 "author"   => options.author,
+                 "test"     => options.test)
