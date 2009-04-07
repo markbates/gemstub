@@ -30,6 +30,10 @@ Spec::Runner.configure do |config|
   
 end
 
+def manager
+  manager = Gemstub::Tools::GemManager.instance
+end
+
 # def fixture(name)
 #   File.read(File.join(File.dirname(__FILE__), 'fixtures', name))
 # end

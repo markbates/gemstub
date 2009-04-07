@@ -31,6 +31,7 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   s.add_dependency("mack-facets")
   s.add_dependency('genosaurus')
   s.add_dependency('rubyforge')
+  s.add_dependency('yamler')
 end
 
 Rake::GemPackageTask.new(@gem_spec) do |pkg|
