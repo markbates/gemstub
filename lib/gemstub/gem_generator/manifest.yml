@@ -26,7 +26,7 @@ app_lib_app_gem_file:
 
 spec_directory:
   type: directory
-  output_path: <%= File.join(app, "spec", "lib", app) %>
+  output_path: <%= File.join(app, "spec", app) %>
 
 spec_helper_file:
   type: file
@@ -41,7 +41,7 @@ spec_opts_file:
 spec_file:
   type: file
   template_path: <%= File.join(templates_directory_path, "spec", "app_spec.rb.template") %>
-  output_path: <%= File.join(app, "spec", "lib", app, "#{app}_spec.rb") %>
+  output_path: <%= File.join(app, "spec", app, "#{app}_spec.rb") %>
 
 <% elsif unit? %>
 

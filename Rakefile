@@ -12,7 +12,7 @@ require 'spec/rake/spectask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '1.2.1'
+  s.version = '1.2.2'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
