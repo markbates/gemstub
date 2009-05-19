@@ -12,7 +12,7 @@ require 'spec/rake/spectask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '1.2.2'
+  s.version = '1.2.3'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
@@ -48,13 +48,14 @@ Spec::Rake::SpecTask.new(:default) do |t|
 end
 
 desc "Install the gem"
-task :install => [:gemspec, :package] do |t|
+task :install => [:package] do |t|
   sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
   puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources`
 end
 
 desc 'regenerate the gemspec'
 task :gemspec do
+  @gem_spec.version = "#{@gem_spec.version}.#{Time.now.strftime('%Y%m%d%H%M%S')}"
   File.open(File.join(File.dirname(__FILE__), 'gemstub.gemspec'), 'w') {|f| f.puts @gem_spec.to_ruby}
 end
 
