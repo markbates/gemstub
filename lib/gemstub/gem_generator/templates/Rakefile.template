@@ -118,7 +118,11 @@ end
 Rake::RDocTask.new do |rd|
   rd.main = "README"
   files = Dir.glob("**/*.rb")
+<%- if rspec? -%>
+  files = files.collect {|f| f unless f.match("spec/") || f.match("doc/") }.compact
+<%- elsif unit? -%>
   files = files.collect {|f| f unless f.match("test/") || f.match("doc/") }.compact
+<%- end -%>
   files << "README"
   rd.rdoc_files = files
   rd.rdoc_dir = "doc"
