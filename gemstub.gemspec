@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gemstub}
-  s.version = "1.2.4.20090605150858"
+  s.version = "1.2.5.20090605171547"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Bates"]
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.default_executable = %q{gemstub}
   s.email = %q{mark@markbates.com}
   s.executables = ["gemstub"]
-  s.files = ["lib/gemstub/gem_generator/gem_generator.rb", "lib/gemstub/gem_generator/manifest.yml", "lib/gemstub/gem_generator/templates/app_gem.rb.template", "lib/gemstub/gem_generator/templates/app_init.rb.template", "lib/gemstub/gem_generator/templates/Rakefile.template", "lib/gemstub/gem_generator/templates/README.template", "lib/gemstub/gem_generator/templates/spec/app_spec.rb.template", "lib/gemstub/gem_generator/templates/spec/spec.opts.template", "lib/gemstub/gem_generator/templates/spec/spec_helper.rb.template", "lib/gemstub/gem_generator/templates/test/test_app.rb.template", "lib/gemstub/gem_generator/templates/test/test_helper.rb.template", "lib/gemstub/tools.rb", "lib/gemstub/yaml_generator/manifest.yml", "lib/gemstub/yaml_generator/templates/gems.yml.template", "lib/gemstub/yaml_generator/yaml_generator.rb", "lib/gemstub.rb", "README", "bin/gemstub"]
+  s.files = ["lib/gemstub/gem_generator/gem_generator.rb", "lib/gemstub/gem_generator/manifest.yml", "lib/gemstub/gem_generator/templates/app_gem.rb.template", "lib/gemstub/gem_generator/templates/app_init.rb.template", "lib/gemstub/gem_generator/templates/LICENSE.template", "lib/gemstub/gem_generator/templates/Rakefile.template", "lib/gemstub/gem_generator/templates/README.template", "lib/gemstub/gem_generator/templates/spec/app_spec.rb.template", "lib/gemstub/gem_generator/templates/spec/spec.opts.template", "lib/gemstub/gem_generator/templates/spec/spec_helper.rb.template", "lib/gemstub/gem_generator/templates/test/test_app.rb.template", "lib/gemstub/gem_generator/templates/test/test_helper.rb.template", "lib/gemstub/tools.rb", "lib/gemstub/yaml_generator/manifest.yml", "lib/gemstub/yaml_generator/templates/gems.yml.template", "lib/gemstub/yaml_generator/yaml_generator.rb", "lib/gemstub.rb", "README", "bin/gemstub"]
   s.homepage = %q{http://www.mackframework.com}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{gemstub}

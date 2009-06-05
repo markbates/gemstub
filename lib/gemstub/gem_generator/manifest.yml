@@ -11,6 +11,11 @@ app_readme_file:
   type: file
   template_path: <%= File.join(templates_directory_path, "README.template") %>
   output_path: <%= File.join(app, "README") %>
+  
+app_license_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "LICENSE.template") %>
+  output_path: <%= File.join(app, "LICENSE") %>
 
 app_lib_init_file:
   type: file

@@ -26,9 +26,9 @@ end
   s.author = "<%= author %>"
   s.email = ""
   s.homepage = ""
-  s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
+  s.files = FileList['lib/**/*.*', 'README', 'LICENSE', 'doc/**/*.*', 'bin/**/*.*']
   s.require_paths = ['lib']
-  s.extra_rdoc_files = ["README"]
+  s.extra_rdoc_files = ['README', 'LICENSE']
   s.has_rdoc = true
   s.rubyforge_project = "<%= app %>"
   # s.test_files = FileList['spec/**/*']
@@ -123,7 +123,8 @@ Rake::RDocTask.new do |rd|
 <%- elsif unit? -%>
   files = files.collect {|f| f unless f.match("test/") || f.match("doc/") }.compact
 <%- end -%>
-  files << "README"
+  files << 'README'
+  files << 'LICENSE'
   rd.rdoc_files = files
   rd.rdoc_dir = "doc"
   rd.options << "--line-numbers"
