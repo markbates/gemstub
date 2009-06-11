@@ -26,7 +26,7 @@ end
   s.author = "<%= author %>"
   s.email = ""
   s.homepage = ""
-  s.files = FileList['lib/**/*.*', 'README', 'LICENSE', 'doc/**/*.*', 'bin/**/*.*']
+  s.files = FileList['lib/**/*.*', 'README', 'LICENSE', 'bin/**/*.*']
   s.require_paths = ['lib']
   s.extra_rdoc_files = ['README', 'LICENSE']
   s.has_rdoc = true
