@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), "..", "test_helper")
 
 class Test<%= app.classify %> < Test::Unit::TestCase
-  context <%= app.classify %> do
+  context '<%= app.classify %>' do
     should "pass" do
       assert true
     end
