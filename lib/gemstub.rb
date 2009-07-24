@@ -167,6 +167,8 @@ module Gemstub
         rd.title = "content_o_matic"
         yield rd if block_given?
       end
+      
+      task :doc => [:readme, :rerdoc]
     end
     
   end # class << self
