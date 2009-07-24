@@ -76,7 +76,7 @@ module Gemstub
       desc 'regenerate the gemspec'
       task :gemspec do
         @gem_spec.version = "#{@gem_spec.version}.#{Time.now.strftime('%Y%m%d%H%M%S')}"
-        File.open(File.join('content_o_matic.gemspec'), 'w') {|f| f.puts @gem_spec.to_ruby}
+        File.open(File.join("#{@gem_spec.name}.gemspec"), 'w') {|f| f.puts @gem_spec.to_ruby}
       end
 
       desc "Install the gem"
