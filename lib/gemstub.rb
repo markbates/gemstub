@@ -74,13 +74,13 @@ module Gemstub
       end
 
       desc 'regenerate the gemspec'
-      task :gemspec do
+      task :gemspec => [:readme] do
         @gem_spec.version = "#{@gem_spec.version}.#{Time.now.strftime('%Y%m%d%H%M%S')}"
         File.open(File.join("#{@gem_spec.name}.gemspec"), 'w') {|f| f.puts @gem_spec.to_ruby}
       end
 
       desc "Install the gem"
-      task :install => [:package] do |t|
+      task :install => [:readme, :package] do |t|
         sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
         puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources --no-ri --no-rdoc`
       end
@@ -116,6 +116,35 @@ module Gemstub
             raise e
           end
         end
+      end
+      
+      task :readme do
+        txt = File.read(File.join(FileUtils.pwd, 'README.textile'))
+        plain = File.join(FileUtils.pwd, 'README')
+
+        # txt.gsub!(/[\s](@\S+@)[\s]/, "<tt>#{$1}</tt>")
+        txt.scan(/[\s]@(\S+)@[\s|\.]/).flatten.each do |word|
+          puts "replacing: @#{word}@ w/ <tt>#{word}</tt>"
+          txt.gsub!("@#{word}@", "<tt>#{word}</tt>")
+        end
+
+        ['h1', 'h2', 'h3'].each_with_index do |h, i|
+          txt.scan(/(#{h}.\s)/).flatten.each do |word|
+            eq = '=' * (i + 1)
+            puts "replacing: '#{word}' w/ #{eq}"
+            txt.gsub!(word, eq)
+          end
+        end
+
+        ['<pre><code>', '</code></pre>'].each do |h|
+          txt.scan(/(#{h}.*$)/).flatten.each do |word|
+            puts "replacing: '#{word}' with nothing"
+            txt.gsub!(word, '')
+          end
+        end
+
+        txt.gsub!("\n\n\n", "\n\n")
+        File.open(plain, 'w') {|f| f.write txt}
       end
 
     end # gem_spec
