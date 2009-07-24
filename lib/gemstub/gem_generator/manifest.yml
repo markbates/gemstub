@@ -10,7 +10,7 @@ app_rake_file:
 app_readme_file:
   type: file
   template_path: <%= File.join(templates_directory_path, "README.template") %>
-  output_path: <%= File.join(app, "README") %>
+  output_path: <%= File.join(app, "README.textile") %>
   
 app_license_file:
   type: file
