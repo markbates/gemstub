@@ -124,21 +124,21 @@ module Gemstub
 
         # txt.gsub!(/[\s](@\S+@)[\s]/, "<tt>#{$1}</tt>")
         txt.scan(/[\s]@(\S+)@[\s|\.]/).flatten.each do |word|
-          puts "replacing: @#{word}@ w/ <tt>#{word}</tt>"
+          # puts "replacing: @#{word}@ w/ <tt>#{word}</tt>"
           txt.gsub!("@#{word}@", "<tt>#{word}</tt>")
         end
 
         ['h1', 'h2', 'h3'].each_with_index do |h, i|
           txt.scan(/(#{h}.\s)/).flatten.each do |word|
             eq = '=' * (i + 1)
-            puts "replacing: '#{word}' w/ #{eq}"
+            # puts "replacing: '#{word}' w/ #{eq}"
             txt.gsub!(word, eq)
           end
         end
 
         ['<pre><code>', '</code></pre>'].each do |h|
           txt.scan(/(#{h}.*$)/).flatten.each do |word|
-            puts "replacing: '#{word}' with nothing"
+            # puts "replacing: '#{word}' with nothing"
             txt.gsub!(word, '')
           end
         end
