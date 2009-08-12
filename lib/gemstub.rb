@@ -61,6 +61,7 @@ module Gemstub
         s.homepage = ""
         s.files = FileList['lib/**/*.*', 'README', 'LICENSE', 'bin/**/*.*']
         s.require_paths = ['lib']
+        s.bindir = 'bin'
         s.extra_rdoc_files = ['README', 'LICENSE']
         s.has_rdoc = true
         yield s
