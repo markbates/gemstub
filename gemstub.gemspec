@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gemstub}
-  s.version = "1.5.3.2.20090812144925"
+  s.version = "1.5.3.2.20090813155753"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Bates"]
-  s.date = %q{2009-08-12}
+  s.date = %q{2009-08-13}
   s.default_executable = %q{gemstub}
   s.email = %q{mark@markbates.com}
   s.executables = ["gemstub"]
