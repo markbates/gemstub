@@ -12,7 +12,7 @@ require 'spec/rake/spectask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '1.5.4'
+  s.version = '1.5.5'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
@@ -61,6 +61,8 @@ end
 
 desc "Release the gem"
 task :release => :install do |t|
+  gem_pkg = File.join("pkg", "#{@gem_spec.name}-#{@gem_spec.version}.gem")
+  system "gem push #{gem_pkg}"
   begin
     ac_path = File.join(ENV["HOME"], ".rubyforge", "auto-config.yml")
     if File.exists?(ac_path)
@@ -73,12 +75,12 @@ task :release => :install do |t|
       rf = RubyForge.new
       rf.configure
       rf.login
-      rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, File.join("pkg", "#{@gem_spec.name}-#{@gem_spec.version}.gem"))
+      rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, gem_pkg)
     rescue Exception => e
       if e.message.match("Invalid package_id") || e.message.match("no <package_id> configured for")
         puts "You need to create the package!"
         rf.create_package(@gem_spec.rubyforge_project, @gem_spec.name)
-        rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, File.join("pkg", "#{@gem_spec.name}-#{@gem_spec.version}.gem"))
+        rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, gem_pkg)
       else
         raise e
       end
