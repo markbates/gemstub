@@ -131,7 +131,7 @@ module Gemstub
           txt.gsub!("@#{word}@", "<tt>#{word}</tt>")
         end
 
-        ['h1', 'h2', 'h3'].each_with_index do |h, i|
+        ['h1', 'h2', 'h3', 'h4'].each_with_index do |h, i|
           txt.scan(/(#{h}.\s)/).flatten.each do |word|
             eq = '=' * (i + 1)
             # puts "replacing: '#{word}' w/ #{eq}"
