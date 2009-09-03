@@ -155,15 +155,9 @@ module Gemstub
     def rdoc(&block)
       Rake::RDocTask.new do |rd|
         rd.main = "README"
-        files = Dir.glob("**/*.rb")
-        if rspec?
-          files = files.collect {|f| f unless f.match("spec/") || f.match("doc/") }.compact
-        elsif test_unit?
-          files = files.collect {|f| f unless f.match("test/") || f.match("doc/") }.compact
-        end
-        files << 'README'
-        files << 'LICENSE'
-        rd.rdoc_files = files
+        rd.rdoc_files = Dir.glob(File.join('lib', '**', '*.rb'))
+        rd.rdoc_files << 'README'
+        rd.rdoc_files << 'LICENSE'
         rd.rdoc_dir = "doc"
         rd.options << "--line-numbers"
         rd.options << "--inline-source"
