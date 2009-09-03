@@ -23,7 +23,7 @@ Usage: at a command prompt simply type: gemstub your_gem_name_here
 
 That's it, after that, you all you have to do is the actual coding of your gem! Enjoy!
 }
-  
+  s.description = s.summary
   s.files = FileList['lib/**/*.*', 'README', 'doc/**/*.*', 'bin/**/*.*']
   s.require_paths = ['lib']
   s.bindir = "bin"
