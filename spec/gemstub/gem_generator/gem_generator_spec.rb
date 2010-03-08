@@ -11,7 +11,6 @@ describe GemGenerator do
     GemGenerator.run('app' => 'my_cool_new_gem', 'author' => 'markbates')
     out_base_path = File.join($genosaurus_output_directory, 'my_cool_new_gem')
     %w{ 
-       README 
        lib/my_cool_new_gem.rb
        lib/my_cool_new_gem/my_cool_new_gem.rb}.each do |f|
       File.read(File.join(out_base_path, f)).should match_fixture("my_cool_new_gem/#{f}")
@@ -23,12 +22,11 @@ describe GemGenerator do
     GemGenerator.run('app' => 'my_cool_new_gem', 'author' => 'markbates')
     out_base_path = File.join($genosaurus_output_directory, 'my_cool_new_gem')
     %w{ 
-       README 
        lib/my_cool_new_gem.rb
        lib/my_cool_new_gem/my_cool_new_gem.rb
        spec/spec.opts
        spec/spec_helper.rb
-       spec/lib/my_cool_new_gem/my_cool_new_gem_spec.rb}.each do |f|
+       spec/my_cool_new_gem/my_cool_new_gem_spec.rb}.each do |f|
       File.read(File.join(out_base_path, f)).should match_fixture("my_cool_new_gem/#{f}")
     end
     File.read(File.join(out_base_path, "Rakefile")).should match_fixture("my_cool_new_gem/Rakefile.rspec")
@@ -38,7 +36,6 @@ describe GemGenerator do
     GemGenerator.run('app' => 'my_cool_new_gem', 'author' => 'markbates', 'test' => 'unit')
     out_base_path = File.join($genosaurus_output_directory, 'my_cool_new_gem')
     %w{ 
-       README 
        lib/my_cool_new_gem.rb
        lib/my_cool_new_gem/my_cool_new_gem.rb
        test/test_helper.rb

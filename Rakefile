@@ -12,7 +12,7 @@ require 'spec/rake/spectask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '1.6.0'
+  s.version = '1.7.0'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
@@ -28,7 +28,7 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   s.require_paths = ['lib']
   s.bindir = "bin"
   s.executables << "gemstub"
-  s.add_dependency("mack-facets")
+  s.add_dependency("activesupport")
   s.add_dependency('genosaurus')
   s.add_dependency('rubyforge')
 end
