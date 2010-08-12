@@ -29,7 +29,7 @@ require 'rake/gempackagetask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '2.0.0.pre'
+  s.version = '2.0.0.pre1'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"

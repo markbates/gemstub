@@ -1,6 +1,7 @@
+require 'active_support'
+require 'mark_facets'
 require 'genosaurus'
 # require "mack-facets"
-require 'active_support'
 require File.join(File.dirname(__FILE__), 'gemstub', 'gem_generator', 'gem_generator')
 
 require 'rake'
