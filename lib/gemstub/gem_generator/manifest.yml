@@ -22,6 +22,11 @@ app_readme_file:
   template_path: <%= File.join(templates_directory_path, "README.template") %>
   output_path: <%= File.join(app, "README.textile") %>
   
+gitignore_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "gitignore.template") %>
+  output_path: <%= File.join(app, ".gitignore") %>
+  
 app_license_file:
   type: file
   template_path: <%= File.join(templates_directory_path, "LICENSE.template") %>
