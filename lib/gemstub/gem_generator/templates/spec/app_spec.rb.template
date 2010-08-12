@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "<%= app.camelcase %>" do
+describe "<%= app %>" do
 
   it "should do something" do
     pending

@@ -5,9 +5,9 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 require 'pp'
-require 'genosaurus'
 require 'active_support'
 require 'mark_facets'
+require 'genosaurus'
 require 'erb'
 
 app = ARGV[0]
