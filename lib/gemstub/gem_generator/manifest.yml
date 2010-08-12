@@ -6,6 +6,16 @@ app_rake_file:
   type: file
   template_path: <%= File.join(templates_directory_path, "Rakefile.template") %>
   output_path: <%= File.join(app, "Rakefile") %>
+  
+rvm_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "rvmrc.template") %>
+  output_path: <%= File.join(app, ".rvmrc") %>
+  
+gemfile_file:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "Gemfile.template") %>
+  output_path: <%= File.join(app, "Gemfile") %>
 
 app_readme_file:
   type: file
@@ -37,11 +47,6 @@ spec_helper_file:
   type: file
   template_path: <%= File.join(templates_directory_path, "spec", "spec_helper.rb.template") %>
   output_path: <%= File.join(app, "spec", "spec_helper.rb") %>
-
-spec_opts_file:
-  type: file
-  template_path: <%= File.join(templates_directory_path, "spec", "spec.opts.template") %>
-  output_path: <%= File.join(app, "spec", "spec.opts") %>
 
 spec_file:
   type: file

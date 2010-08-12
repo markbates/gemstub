@@ -1,18 +1,35 @@
-require 'rake'
-require 'rake/gempackagetask'
-require 'rake/clean'
-require 'rake/testtask'
-require 'rake/rdoctask'
-require 'find'
-require 'rubyforge'
 require 'rubygems'
-require 'rubygems/gem_runner'
-require 'spec'
-require 'spec/rake/spectask'
+
+# Set up gems listed in the Gemfile.
+gemfile = File.expand_path('../Gemfile', __FILE__)
+begin
+  ENV['BUNDLE_GEMFILE'] = gemfile
+  require 'bundler'
+  Bundler.setup
+rescue Bundler::GemNotFound => e
+  STDERR.puts e.message
+  STDERR.puts "Try running `bundle install`."
+  exit!
+end if File.exist?(gemfile)
+
+Bundler.require
+
+
+# require 'rake'
+require 'rake/gempackagetask'
+# require 'rake/clean'
+# require 'rake/testtask'
+# require 'rake/rdoctask'
+# require 'find'
+# # require 'rubyforge'
+# # require 'rubygems'
+# # require 'rubygems/gem_runner'
+# require 'rspec/core'
+# require 'rspec/core/rake_task'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '1.7.0'
+  s.version = '2.0.0.pre'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
@@ -28,9 +45,11 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   s.require_paths = ['lib']
   s.bindir = "bin"
   s.executables << "gemstub"
+  s.add_dependency("rspec", ">= 2.0.0.beta.19")
   s.add_dependency("activesupport")
+  s.add_dependency("mark_facets")
   s.add_dependency('genosaurus')
-  s.add_dependency('rubyforge')
+  # s.add_dependency('rubyforge')
 end
 
 Rake::GemPackageTask.new(@gem_spec) do |pkg|
@@ -40,12 +59,10 @@ Rake::GemPackageTask.new(@gem_spec) do |pkg|
 end
 
 # rake
-desc 'Run specifications'
-Spec::Rake::SpecTask.new(:default) do |t|
-  opts = File.join(File.dirname(__FILE__), "spec", 'spec.opts')
-  t.spec_opts << '--options' << opts if File.exists?(opts)
-  t.spec_files = Dir.glob('spec/**/*_spec.rb').collect {|f| f unless f.match('fixtures/')}.compact
-end
+# desc 'Run specifications'
+# RSpec::Core::RakeTask.new(:default) do |t|
+#   t.pattern = "./spec/gemstub/**/*_spec.rb"
+# end
 
 desc "Install the gem"
 task :install => [:package] do |t|
@@ -63,33 +80,4 @@ desc "Release the gem"
 task :release => :install do |t|
   gem_pkg = File.join("pkg", "#{@gem_spec.name}-#{@gem_spec.version}.gem")
   system "gem push #{gem_pkg}"
-  # begin
-  #   ac_path = File.join(ENV["HOME"], ".rubyforge", "auto-config.yml")
-  #   if File.exists?(ac_path)
-  #     fixed = File.open(ac_path).read.gsub("  ~: {}\n\n", '')
-  #     fixed.gsub!(/    !ruby\/object:Gem::Version \? \n.+\n.+\n\n/, '')
-  #     puts "Fixing #{ac_path}..."
-  #     File.open(ac_path, "w") {|f| f.puts fixed}
-  #   end
-  #   begin
-  #     rf = RubyForge.new
-  #     rf.configure
-  #     rf.login
-  #     rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, gem_pkg)
-  #   rescue Exception => e
-  #     if e.message.match("Invalid package_id") || e.message.match("no <package_id> configured for")
-  #       puts "You need to create the package!"
-  #       rf.create_package(@gem_spec.rubyforge_project, @gem_spec.name)
-  #       rf.add_release(@gem_spec.rubyforge_project, @gem_spec.name, @gem_spec.version, gem_pkg)
-  #     else
-  #       raise e
-  #     end
-  #   end
-  # rescue Exception => e
-  #   if e.message == "You have already released this version."
-  #     puts e
-  #   else
-  #     raise e
-  #   end
-  # end
 end
