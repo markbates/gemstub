@@ -29,7 +29,7 @@ require 'rake/gempackagetask'
 
 @gem_spec = Gem::Specification.new do |s|
   s.name = 'gemstub'
-  s.version = '2.0.0.pre3'
+  s.version = '2.0.0'
   s.author = "Mark Bates"
   s.email = "mark@markbates.com"
   s.homepage = "http://www.mackframework.com"
@@ -46,7 +46,7 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   s.bindir = "bin"
   s.executables << "gemstub"
   s.add_dependency("rspec", ">= 2.0.0.beta.19")
-  s.add_dependency("activesupport")
+  s.add_dependency("activesupport", '~>3.0.0.rc')
   s.add_dependency("mark_facets")
   s.add_dependency('genosaurus')
   # s.add_dependency('rubyforge')

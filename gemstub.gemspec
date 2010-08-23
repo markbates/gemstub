@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gemstub}
-  s.version = "2.0.0.pre3.20100812153633"
+  s.version = "2.0.0.20100823121615"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Bates"]
-  s.date = %q{2010-08-12}
+  s.date = %q{2010-08-23}
   s.default_executable = %q{gemstub}
   s.description = %q{Gemstub is a very simple tool for creating the stub code you need to build a gem.  Usage: at a command prompt simply type: gemstub your_gem_name_here  That's it, after that, you all you have to do is the actual coding of your gem! Enjoy!}
   s.email = %q{mark@markbates.com}
