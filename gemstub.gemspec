@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gemstub}
-  s.version = "2.0.0.20100823121615"
+  s.version = "2.0.1.20101015155925"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Bates"]
-  s.date = %q{2010-08-23}
+  s.date = %q{2010-10-15}
   s.default_executable = %q{gemstub}
   s.description = %q{Gemstub is a very simple tool for creating the stub code you need to build a gem.  Usage: at a command prompt simply type: gemstub your_gem_name_here  That's it, after that, you all you have to do is the actual coding of your gem! Enjoy!}
   s.email = %q{mark@markbates.com}
@@ -23,19 +23,19 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
+      s.add_runtime_dependency(%q<rspec>, [">= 2.0.0"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_runtime_dependency(%q<mark_facets>, [">= 0"])
       s.add_runtime_dependency(%q<genosaurus>, [">= 0"])
     else
-      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
-      s.add_dependency(%q<activesupport>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0"])
+      s.add_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_dependency(%q<mark_facets>, [">= 0"])
       s.add_dependency(%q<genosaurus>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
-    s.add_dependency(%q<activesupport>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0"])
+    s.add_dependency(%q<activesupport>, [">= 3.0.0"])
     s.add_dependency(%q<mark_facets>, [">= 0"])
     s.add_dependency(%q<genosaurus>, [">= 0"])
   end
