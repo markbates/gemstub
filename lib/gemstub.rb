@@ -68,7 +68,6 @@ module Gemstub
         s.require_paths = ['lib']
         s.bindir = 'bin'
         s.extra_rdoc_files = ['LICENSE']
-        s.has_rdoc = true
         yield s
       end
 
