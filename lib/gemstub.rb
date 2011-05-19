@@ -38,7 +38,7 @@ module Gemstub
         require 'rspec/core'
         require 'rspec/core/rake_task'
         desc 'Run specifications'
-        Rspec::Core::RakeTask.new(:default) do |t|
+        RSpec::Core::RakeTask.new(:default) do |t|
           # opts = File.join('spec', 'spec.opts')
           # t.spec_opts << '--options' << opts if File.exists?(opts)
           # t.spec_files = Dir.glob('spec/**/*_spec.rb')
@@ -64,10 +64,10 @@ module Gemstub
         s.description = "#{s.name} was developed by: #{s.author}"
         s.email = ""
         s.homepage = ""
-        s.files = FileList['lib/**/*.*', 'README', 'LICENSE', 'bin/**/*.*']
+        s.files = FileList['lib/**/*.*', 'LICENSE', 'bin/**/*.*']
         s.require_paths = ['lib']
         s.bindir = 'bin'
-        s.extra_rdoc_files = ['README', 'LICENSE']
+        s.extra_rdoc_files = ['LICENSE']
         s.has_rdoc = true
         yield s
       end
@@ -80,13 +80,13 @@ module Gemstub
       end
 
       desc 'regenerate the gemspec'
-      task :gemspec => [:readme] do
+      task :gemspec do
         @gem_spec.version = "#{@gem_spec.version}.#{Time.now.strftime('%Y%m%d%H%M%S')}"
         File.open(File.join("#{@gem_spec.name}.gemspec"), 'w') {|f| f.puts @gem_spec.to_ruby}
       end
 
       desc "Install the gem"
-      task :install => [:readme, :package] do |t|
+      task :install => [:package] do |t|
         sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
         puts `#{sudo} gem install #{File.join("pkg", @gem_spec.name)}-#{@gem_spec.version}.gem --no-update-sources --no-ri --no-rdoc`
       end
@@ -97,42 +97,40 @@ module Gemstub
         system "gem push #{gem_pkg}"
       end
       
-      task :readme do
-        txt = File.read(File.join(FileUtils.pwd, 'README.textile'))
-        plain = File.join(FileUtils.pwd, 'README')
-
-        # txt.gsub!(/[\s](@\S+@)[\s]/, "<tt>#{$1}</tt>")
-        txt.scan(/[\s]@(\S+)@[\s|\.]/).flatten.each do |word|
-          # puts "replacing: @#{word}@ w/ <tt>#{word}</tt>"
-          txt.gsub!("@#{word}@", "<tt>#{word}</tt>")
-        end
-
-        ['h1', 'h2', 'h3', 'h4'].each_with_index do |h, i|
-          txt.scan(/(#{h}.\s)/).flatten.each do |word|
-            eq = '=' * (i + 1)
-            # puts "replacing: '#{word}' w/ #{eq}"
-            txt.gsub!(word, eq)
-          end
-        end
-
-        ['<pre><code>', '</code></pre>'].each do |h|
-          txt.scan(/(#{h}.*$)/).flatten.each do |word|
-            # puts "replacing: '#{word}' with nothing"
-            txt.gsub!(word, '')
-          end
-        end
-
-        txt.gsub!("\n\n\n", "\n\n")
-        File.open(plain, 'w') {|f| f.write txt}
-      end
+      # task :readme do
+      #   txt = File.read(File.join(FileUtils.pwd, 'README.textile'))
+      #   plain = File.join(FileUtils.pwd, 'README')
+      # 
+      #   # txt.gsub!(/[\s](@\S+@)[\s]/, "<tt>#{$1}</tt>")
+      #   txt.scan(/[\s]@(\S+)@[\s|\.]/).flatten.each do |word|
+      #     # puts "replacing: @#{word}@ w/ <tt>#{word}</tt>"
+      #     txt.gsub!("@#{word}@", "<tt>#{word}</tt>")
+      #   end
+      # 
+      #   ['h1', 'h2', 'h3', 'h4'].each_with_index do |h, i|
+      #     txt.scan(/(#{h}.\s)/).flatten.each do |word|
+      #       eq = '=' * (i + 1)
+      #       # puts "replacing: '#{word}' w/ #{eq}"
+      #       txt.gsub!(word, eq)
+      #     end
+      #   end
+      # 
+      #   ['<pre><code>', '</code></pre>'].each do |h|
+      #     txt.scan(/(#{h}.*$)/).flatten.each do |word|
+      #       # puts "replacing: '#{word}' with nothing"
+      #       txt.gsub!(word, '')
+      #     end
+      #   end
+      # 
+      #   txt.gsub!("\n\n\n", "\n\n")
+      #   File.open(plain, 'w') {|f| f.write txt}
+      # end
 
     end # gem_spec
     
     def rdoc(&block)
       Rake::RDocTask.new do |rd|
-        rd.main = "README"
         rd.rdoc_files = Dir.glob(File.join('lib', '**', '*.rb'))
-        rd.rdoc_files << 'README'
         rd.rdoc_files << 'LICENSE'
         rd.rdoc_dir = "doc"
         rd.options << "--line-numbers"
@@ -141,7 +139,7 @@ module Gemstub
         yield rd if block_given?
       end
       
-      task :doc => [:readme, :rerdoc]
+      task :doc => [:rerdoc]
     end
     
   end # class << self
