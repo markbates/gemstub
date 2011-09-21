@@ -16,7 +16,7 @@ Bundler.require
 
 
 # require 'rake'
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
 # require 'rake/clean'
 # require 'rake/testtask'
 # require 'rake/rdoctask'
@@ -52,7 +52,7 @@ That's it, after that, you all you have to do is the actual coding of your gem! 
   # s.add_dependency('rubyforge')
 end
 
-Rake::GemPackageTask.new(@gem_spec) do |pkg|
+Gem::PackageTask.new(@gem_spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
   rm_f FileList['pkg/**/*.*']
