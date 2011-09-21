@@ -5,10 +5,10 @@ require 'genosaurus'
 require File.join(File.dirname(__FILE__), 'gemstub', 'gem_generator', 'gem_generator')
 
 require 'rake'
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
 require 'rake/clean'
 require 'rake/testtask'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'find'
 # require 'rubyforge'
 require 'rubygems'
@@ -20,6 +20,7 @@ require 'fileutils'
 module Gemstub
   
   class << self
+    include Rake::DSL
     
     attr_accessor :test_framework
     
@@ -72,7 +73,7 @@ module Gemstub
       end
 
       # rake package
-      Rake::GemPackageTask.new(@gem_spec) do |pkg|
+      Gem::PackageTask.new(@gem_spec) do |pkg|
         pkg.need_zip = false
         pkg.need_tar = false
         rm_f FileList['pkg/**/*.*']
@@ -128,7 +129,8 @@ module Gemstub
     end # gem_spec
     
     def rdoc(&block)
-      Rake::RDocTask.new do |rd|
+      RDoc::Task.new do |rd|
+      # Rake::RDocTask.new do |rd|
         rd.rdoc_files = Dir.glob(File.join('lib', '**', '*.rb'))
         rd.rdoc_files << 'LICENSE'
         rd.rdoc_dir = "doc"
